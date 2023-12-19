@@ -12,17 +12,17 @@ import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
 
 const calendarApp = createCalendar({
   selectedDate: '2023-12-19',
-  locale: 'de-DE',
+  locale: 'en-UK',
   views: [viewDay, viewWeek, viewMonthGrid],
+  defaultView: viewWeek.name,
+  firstDayOfWeek: 0,
   plugins: [createEventModalPlugin(), createDragAndDropPlugin()],
   events: [
     {
       id: 1,
       title: 'Event 1',
-      time: {
-        start: '2023-12-19',
-        end: '2023-12-19',
-      },
+      start: '2023-12-19',
+      end: '2023-12-19',
     },
   ],
 })
