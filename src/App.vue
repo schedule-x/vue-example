@@ -9,6 +9,8 @@ import {
 import '@schedule-x/theme-default/dist/index.css'
 import { createEventModalPlugin } from '@schedule-x/event-modal'
 import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
+import CustomTimeGridEvent from "./components/CustomTimeGridEvent.vue";
+import CustomDateGridEvent from "./components/CustomDateGridEvent.vue";
 
 const calendarApp = createCalendar({
   selectedDate: '2023-12-19',
@@ -24,12 +26,33 @@ const calendarApp = createCalendar({
       start: '2023-12-19',
       end: '2023-12-19',
     },
+    {
+      id: 2,
+      title: 'Event 2',
+      start: '2023-12-20 12:00',
+      end: '2023-12-20 13:00',
+    },
+    {
+      id: 2,
+      title: 'Event 2',
+      start: '2023-12-20 04:00',
+      end: '2023-12-20 08:10',
+    },
   ],
 })
+
+const customComponents = {
+  timeGridEvent: CustomTimeGridEvent,
+  dateGridEvent: CustomDateGridEvent,
+}
+
 </script>
 
 <template>
-  <ScheduleXCalendar :calendar-app="calendarApp" />
+  <ScheduleXCalendar
+      :calendar-app="calendarApp"
+      :custom-components="customComponents"
+  />
 </template>
 
 <style scoped>
