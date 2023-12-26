@@ -6,5 +6,10 @@ import '@fontsource/open-sans/500-italic.css'
 import '@fontsource/open-sans/700.css'
 import '@fontsource/open-sans/700-italic.css'
 import App from './App.vue'
+import {createPinia} from "pinia";
 
-createApp(App).mount('#app')
+const pinia = createPinia()
+
+let app = createApp(App);
+app.use(pinia);
+app.mount('#app')
