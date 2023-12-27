@@ -10,7 +10,6 @@ import '@schedule-x/theme-default/dist/index.css'
 import { createEventModalPlugin } from '@schedule-x/event-modal'
 import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
 import CustomTimeGridEvent from "./components/CustomTimeGridEvent.vue";
-import CustomDateGridEvent from "./components/CustomDateGridEvent.vue";
 import {useEventsStore} from "./store/events-store.ts";
 
 const calendarApp = createCalendar({
@@ -44,7 +43,7 @@ const calendarApp = createCalendar({
 
 const customComponents = {
   timeGridEvent: CustomTimeGridEvent,
-  dateGridEvent: CustomDateGridEvent,
+  // dateGridEvent: CustomDateGridEvent,
 }
 
 const eventsStore = useEventsStore()
@@ -58,7 +57,14 @@ const eventsStore = useEventsStore()
     <ScheduleXCalendar
         :calendar-app="calendarApp"
         :custom-components="customComponents"
-    />
+    >
+      <template #dateGridEvent="{ calendarEvent }">
+        <div :style="{ backgroundColor: 'green', color: 'white', width: '100%', height: '100%' }">
+          {{ calendarEvent.title }}
+          <input type="checkbox" @change="eventsStore.toggleEvent(calendarEvent.id)">
+        </div>
+      </template>
+    </ScheduleXCalendar>
   </div>
 </template>
 
