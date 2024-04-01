@@ -7,37 +7,29 @@ import {
   viewMonthGrid,
 } from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
-import { createEventModalPlugin } from '@schedule-x/event-modal'
-import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
 import CustomTimeGridEvent from "./components/CustomTimeGridEvent.vue";
 import {useEventsStore} from "./store/events-store.ts";
 
 const calendarApp = createCalendar({
-  selectedDate: '2023-12-19',
+  selectedDate: '2024-04-01',
   locale: 'en-UK',
   views: [viewDay, viewWeek, viewMonthGrid],
   defaultView: viewWeek.name,
   firstDayOfWeek: 0,
-  plugins: [createEventModalPlugin(), createDragAndDropPlugin()],
+  plugins: [],
   events: [
     {
       id: 1,
+      start: '2024-04-01 10:00',
+      end: '2024-04-01 12:00',
       title: 'Event 1',
-      start: '2023-12-19',
-      end: '2023-12-19',
     },
     {
       id: 2,
+      start: '2024-04-01 14:00',
+      end: '2024-04-01 16:00',
       title: 'Event 2',
-      start: '2023-12-20 12:00',
-      end: '2023-12-20 13:00',
-    },
-    {
-      id: 3,
-      title: 'Event 3',
-      start: '2023-12-20 04:00',
-      end: '2023-12-20 08:10',
-    },
+    }
   ],
 })
 
@@ -47,6 +39,16 @@ const customComponents = {
 }
 
 const eventsStore = useEventsStore()
+
+const setEvents = () => {
+  calendarApp.events.set([
+    {
+      id: 1,
+      start: '2024-04-01 10:00',
+      end: '2024-04-01 12:00',
+    }
+  ])
+}
 
 </script>
 
@@ -58,13 +60,9 @@ const eventsStore = useEventsStore()
         :calendar-app="calendarApp"
         :custom-components="customComponents"
     >
-      <template #dateGridEvent="{ calendarEvent }">
-        <div :style="{ backgroundColor: 'green', color: 'white', width: '100%', height: '100%' }">
-          {{ calendarEvent.title }}
-          <input type="checkbox" @change="eventsStore.toggleEvent(calendarEvent.id)">
-        </div>
-      </template>
     </ScheduleXCalendar>
+
+    <button @click="setEvents">Set new events</button>
   </div>
 </template>
 
