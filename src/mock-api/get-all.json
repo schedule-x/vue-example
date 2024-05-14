@@ -1,0 +1,39 @@
+[
+  {
+    "id": 1,
+    "title": "Daily standup",
+    "start": "2024-05-13 09:00",
+    "end": "2024-05-13 10:00",
+    "rrule": "FREQ=WEEKLY;BYDAY=MO,TU,WE,TH;COUNT=100"
+  },
+  {
+    "id": 2,
+    "title": "Retrospective",
+    "start": "2024-05-14 11:00",
+    "end": "2024-05-13 12:30"
+  },
+  {
+    "id": 3,
+    "title": "Meeting",
+    "start": "2024-05-13 10:00",
+    "end": "2024-05-13 11:00"
+  },
+  {
+    "id": 4,
+    "title": "Meeting",
+    "start": "2024-05-13 10:00",
+    "end": "2024-05-13 11:00"
+  },
+  {
+    "id": 5,
+    "title": "Meeting",
+    "start": "2024-05-13 10:00",
+    "end": "2024-05-13 11:00"
+  },
+  {
+    "id": 6,
+    "title": "Meeting",
+    "start": "2024-05-13 10:00",
+    "end": "2024-05-13 11:00"
+  }
+]
