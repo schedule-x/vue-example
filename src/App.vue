@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ScheduleXCalendar } from '@schedule-x/vue'
+import { ScheduleXCalendar, SxDatePicker } from '@schedule-x/vue'
 import {
   createCalendar,
   viewMonthAgenda,
@@ -10,56 +10,60 @@ import '@schedule-x/theme-default/dist/index.css'
 // import CustomTimeGridEvent from "./components/CustomTimeGridEvent.vue";
 // import {useEventsStore} from "./store/events-store.ts";
 // import CustomEventModal from "./components/CustomEventModal.vue";
-import {createEventModalPlugin} from "@schedule-x/event-modal";
+// import {createEventModalPlugin} from "@schedule-x/event-modal";
 import {createDragAndDropPlugin} from "@schedule-x/drag-and-drop";
 import {createScrollControllerPlugin} from "@schedule-x/scroll-controller";
-import getAll from './mock-api/get-all.json'
-import {onMounted} from "vue";
 import {createEventRecurrencePlugin, createEventsServicePlugin} from "@schedule-x/event-recurrence";
-import { CalendarEvent } from '@schedule-x/calendar'
+
+import {calendars} from "./calendars.ts";
+import {ref, shallowRef} from "vue";
+import {createCalendarControlsPlugin} from "@schedule-x/calendar-controls";
 
 const eventsService = createEventsServicePlugin();
+const calendarControls = createCalendarControlsPlugin();
 
-const calendarApp = createCalendar({
+const calendarApp = shallowRef(createCalendar({
   selectedDate: '2024-05-13',
   locale: 'en-UK',
   views: [viewMonthAgenda, viewMonthGrid, viewWeek],
-  defaultView: viewMonthAgenda.name,
+  defaultView: viewWeek.name,
+  calendars: calendars,
   plugins: [
-    createEventModalPlugin(),
     createDragAndDropPlugin(),
-    createScrollControllerPlugin(),
+    createScrollControllerPlugin({
+      initialScroll: '08:00'
+    }),
     createEventRecurrencePlugin(),
-    eventsService
+    eventsService,
+    calendarControls
   ],
-  events: [],
+  events: [
+    {
+      id: 1,
+      start: '2024-06-28',
+      end: '2024-06-28',
+      title: 'hi',
+      calendarId: 'work',
+    }
+  ],
   monthGridOptions: {
     nEventsPerDay: 3,
+  },
+  callbacks: {
+    onClickDate(date) {
+      calendarControls.setView(viewWeek.name);
+      calendarControls.setDate(date);
+    }
   }
-})
+}))
+
+const datePickerModel = ref('2024-05-13')
 
 const customComponents = {
   // timeGridEvent: CustomTimeGridEvent,
   // dateGridEvent: CustomDateGridEvent,
   // eventModal: CustomEventModal,
 }
-
-// const eventsStore = useEventsStore()
-console.log(eventsService)
-
-const fetchEventsFromMockAPI = async () => {
-  const events: CalendarEvent[] = await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(getAll)
-    }, 500)
-  })
-
-  eventsService.set(events)
-}
-
-onMounted(async () => {
-  await fetchEventsFromMockAPI()
-})
 
 </script>
 
@@ -69,8 +73,19 @@ onMounted(async () => {
         :calendar-app="calendarApp"
         :custom-components="customComponents"
     >
+<!--      <template #dateGridEvent>-->
+<!--        hello-->
+<!--      </template>-->
     </ScheduleXCalendar>
+
+    <button @click="calendarControls.setDate('2024-12-01')">
+      set date
+    </button>
   </div>
+
+  {{ datePickerModel }}
+
+  <SxDatePicker v-model="datePickerModel" />
 </template>
 
 <style scoped>
