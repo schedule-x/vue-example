@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ScheduleXCalendar, SxDatePicker } from '@schedule-x/vue'
+import { ScheduleXCalendar } from '@schedule-x/vue'
 import {
   createCalendar,
   viewMonthAgenda,
@@ -7,13 +7,10 @@ import {
   viewWeek
 } from '@schedule-x/calendar'
 import '@schedule-x/theme-default/dist/index.css'
-// import CustomTimeGridEvent from "./components/CustomTimeGridEvent.vue";
-// import {useEventsStore} from "./store/events-store.ts";
-// import CustomEventModal from "./components/CustomEventModal.vue";
-// import {createEventModalPlugin} from "@schedule-x/event-modal";
 import {createDragAndDropPlugin} from "@schedule-x/drag-and-drop";
 import {createScrollControllerPlugin} from "@schedule-x/scroll-controller";
 import {createEventRecurrencePlugin, createEventsServicePlugin} from "@schedule-x/event-recurrence";
+import {createEventModalPlugin} from "@schedule-x/event-modal";
 
 import {calendars} from "./calendars.ts";
 import {ref, shallowRef} from "vue";
@@ -21,17 +18,19 @@ import {createCalendarControlsPlugin} from "@schedule-x/calendar-controls";
 
 const eventsService = createEventsServicePlugin();
 const calendarControls = createCalendarControlsPlugin();
+const eventModal = createEventModalPlugin();
 
 const calendarApp = shallowRef(createCalendar({
-  selectedDate: '2024-05-13',
+  selectedDate: '2024-06-28',
   locale: 'en-UK',
   views: [viewMonthAgenda, viewMonthGrid, viewWeek],
   defaultView: viewWeek.name,
   calendars: calendars,
   plugins: [
+    eventModal,
     createDragAndDropPlugin(),
     createScrollControllerPlugin({
-      initialScroll: '08:00'
+      initialScroll: '07:00'
     }),
     createEventRecurrencePlugin(),
     eventsService,
@@ -44,7 +43,14 @@ const calendarApp = shallowRef(createCalendar({
       end: '2024-06-28',
       title: 'hi',
       calendarId: 'work',
-    }
+    },
+    {
+      id: 2,
+      start: '2024-06-28 08:00',
+      end: '2024-06-28 10:00',
+      title: 'hi again',
+      calendarId: 'work',
+    },
   ],
   monthGridOptions: {
     nEventsPerDay: 3,
@@ -57,12 +63,26 @@ const calendarApp = shallowRef(createCalendar({
   }
 }))
 
-const datePickerModel = ref('2024-05-13')
+const closeModal = () => {
+  eventModal.close();
+}
 
-const customComponents = {
-  // timeGridEvent: CustomTimeGridEvent,
-  // dateGridEvent: CustomDateGridEvent,
-  // eventModal: CustomEventModal,
+const eventStyles = {
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'white',
+  border: '2px solid black',
+  borderRadius: '4px',
+  padding: '0 4px',
+}
+
+const eventModalStyles = {
+  boxShadow: '0 0 2em #123',
+  backgroundColor: 'white',
+  backgroundColor: 'white',
+  border: '2px solid black',
+  borderRadius: '4px',
+  padding: '0 4px',
 }
 
 </script>
@@ -71,21 +91,34 @@ const customComponents = {
   <div>
     <ScheduleXCalendar
         :calendar-app="calendarApp"
-        :custom-components="customComponents"
     >
-<!--      <template #dateGridEvent>-->
-<!--        hello-->
-<!--      </template>-->
+      <template #dateGridEvent="{ calendarEvent }">
+        <div :style="eventStyles">
+          {{ calendarEvent.title }}
+        </div>
+      </template>
+
+      <template #timeGridEvent="{ calendarEvent }">
+        <div :style="eventStyles">
+          {{ calendarEvent.title }}
+        </div>
+      </template>
+
+      <template #monthGridEvent="{ calendarEvent }">
+        <div :style="eventStyles">
+          {{ calendarEvent.title }}
+        </div>
+      </template>
+
+      <template #eventModal="{ calendarEvent }">
+        <div :style="eventModalStyles">
+          {{ calendarEvent.title }}
+
+          <button @click="closeModal"></button>
+        </div>
+      </template>
     </ScheduleXCalendar>
-
-    <button @click="calendarControls.setDate('2024-12-01')">
-      set date
-    </button>
   </div>
-
-  {{ datePickerModel }}
-
-  <SxDatePicker v-model="datePickerModel" />
 </template>
 
 <style scoped>
