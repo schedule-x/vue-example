@@ -10,13 +10,13 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@schedule-x/calendar-controls": "^1.54.0",
-    "@schedule-x/drag-and-drop": "^1.54.0",
-    "@schedule-x/event-modal": "^1.59.2",
-    "@schedule-x/event-recurrence": "^1.54.0",
-    "@schedule-x/scroll-controller": "^1.54.0",
-    "@schedule-x/theme-default": "1.54.0",
-    "@schedule-x/vue": "1.47.1",
+    "@schedule-x/calendar-controls": "^2.0.0",
+    "@schedule-x/drag-and-drop": "^2.0.0",
+    "@schedule-x/event-modal": "^2.0.0",
+    "@schedule-x/event-recurrence": "^2.0.0",
+    "@schedule-x/scroll-controller": "^2.0.0",
+    "@schedule-x/theme-default": "^2.0.0",
+    "@schedule-x/vue": "2.0.0",
     "pinia": "^2.1.7",
     "vue": "^3.3.11"
   },
