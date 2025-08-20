@@ -7,6 +7,7 @@ import '@fontsource/open-sans/700.css'
 import '@fontsource/open-sans/700-italic.css'
 import App from './App.vue'
 import {createPinia} from "pinia";
+import 'temporal-polyfill/global'
 
 const pinia = createPinia()
 

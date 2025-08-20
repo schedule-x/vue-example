@@ -13,7 +13,7 @@ import {createEventRecurrencePlugin, createEventsServicePlugin} from "@schedule-
 import {createEventModalPlugin} from "@schedule-x/event-modal";
 
 import {calendars} from "./calendars.ts";
-import {ref, shallowRef} from "vue";
+import {shallowRef} from "vue";
 import {createCalendarControlsPlugin} from "@schedule-x/calendar-controls";
 
 const eventsService = createEventsServicePlugin();
@@ -21,7 +21,7 @@ const calendarControls = createCalendarControlsPlugin();
 const eventModal = createEventModalPlugin();
 
 const calendarApp = shallowRef(createCalendar({
-  selectedDate: '2024-06-28',
+  selectedDate: Temporal.PlainDate.from('2024-06-28'),
   locale: 'en-UK',
   views: [viewMonthAgenda, viewMonthGrid, viewWeek],
   defaultView: viewWeek.name,
@@ -36,19 +36,20 @@ const calendarApp = shallowRef(createCalendar({
     eventsService,
     calendarControls
   ],
+  timezone: 'Asia/Tokyo',
   events: [
     {
       id: 1,
-      start: '2024-06-28',
-      end: '2024-06-28',
-      title: 'hi',
+      start: Temporal.PlainDate.from('2024-06-28'),
+      end: Temporal.PlainDate.from('2024-06-28'),
+      title: 'full day custom event',
       calendarId: 'work',
     },
     {
       id: 2,
-      start: '2024-06-28 08:00',
-      end: '2024-06-28 10:00',
-      title: 'hi again',
+      start: Temporal.ZonedDateTime.from('2024-06-28T08:00:00+09:00[Asia/Tokyo]'),
+      end: Temporal.ZonedDateTime.from('2024-06-28T10:00:00+09:00[Asia/Tokyo]'),
+      title: 'single day, timed custom event',
       calendarId: 'work',
     },
   ],
@@ -78,7 +79,6 @@ const eventStyles = {
 
 const eventModalStyles = {
   boxShadow: '0 0 2em #123',
-  backgroundColor: 'white',
   backgroundColor: 'white',
   border: '2px solid black',
   borderRadius: '4px',
