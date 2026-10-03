@@ -15,6 +15,7 @@ import {createEventModalPlugin} from "@schedule-x/event-modal";
 import {calendars} from "./calendars.ts";
 import {shallowRef} from "vue";
 import {createCalendarControlsPlugin} from "@schedule-x/calendar-controls";
+import ExampleShell from './ExampleShell.vue'
 
 const eventsService = createEventsServicePlugin();
 const calendarControls = createCalendarControlsPlugin();
@@ -88,7 +89,7 @@ const eventModalStyles = {
 </script>
 
 <template>
-  <div>
+  <ExampleShell demo="Vue basics">
     <ScheduleXCalendar
         :calendar-app="calendarApp"
     >
@@ -118,20 +119,5 @@ const eventModalStyles = {
         </div>
       </template>
     </ScheduleXCalendar>
-  </div>
+  </ExampleShell>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
